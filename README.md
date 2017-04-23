@@ -27,7 +27,7 @@ TODO
 --------------
 
 [x] Dockerize the environment
-[ ] Clean up useless Symfony dependencies
+[x] Clean up useless Symfony dependencies
 [ ] Add MongoDb support
 [ ] Init tests
 [ ] Add front routes
