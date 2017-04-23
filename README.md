@@ -40,11 +40,18 @@ Docker
 --------------
 
 ### Lunch the containers
-docker-compose up -d
+    docker-compose up -d
 
 ### Down and rebuild
-docker-compose down && docker-compose rm && docker-compose build
+    docker-compose down && docker-compose rm && docker-compose build
 
 ### Connect
-docker exec -it blog4fun_web_1 /bin/bash
-docker exec -it blog4fun_db_1 /bin/bash
+    docker exec -it blog4fun_web_1 /bin/bash
+    docker exec -it blog4fun_db_1 /bin/bash
+
+### Tips
+Run your composer and symfony command command in the web container
+
+
+    docker exec -it blog4fun_web_1 php composer.phar install --prefer-dist -a
+    docker exec -it blog4fun_web_1 php bin/console cache:clear

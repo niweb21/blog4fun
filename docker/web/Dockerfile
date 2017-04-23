@@ -44,5 +44,7 @@ COPY php/conf.d/custom_php.ini /etc/php/7.1/cli/conf.d/custom_php.ini
 # User 1000 is www-data
 RUN usermod -u 1000 www-data
 
+WORKDIR /var/www/html
+
 EXPOSE 80
 CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
