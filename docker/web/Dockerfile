@@ -21,12 +21,21 @@ RUN apt-get update \
         php7.1-xdebug \
         php7.1-xml \
         php7.1-zip \
+        php7.1-dev \
+        php-pear \
+        pkg-config \
         curl
     # && apt-get remove -y --purge software-properties-common \
     # && apt-get clean \
     # && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# enable php modules
+# Install MongoDB
+RUN pecl install mongodb
+RUN echo "extension=mongodb.so" > /etc/php/7.1/mods-available/mongodb.ini
+RUN ln -s /etc/php/7.1/mods-available/mongodb.ini /etc/php/7.1/cli/conf.d/mongodb.ini
+RUN ln -s /etc/php/7.1/mods-available/mongodb.ini /etc/php/7.1/apache2/conf.d/mongodb.ini
+
+# enable apache2 modules
 RUN a2enmod rewrite
 RUN a2enmod expires
 RUN a2enmod headers
@@ -38,8 +47,9 @@ RUN a2dissite 000-default
 RUN a2dissite default-ssl
 
 # Add conf php
-COPY php/conf.d/custom_php.ini /etc/php/7.1/apache2/conf.d/custom_php.ini
-COPY php/conf.d/custom_php.ini /etc/php/7.1/cli/conf.d/custom_php.ini
+COPY php/conf.d/custom_php.ini /etc/php/7.1/mods-available/custom_php.ini
+RUN ln -s /etc/php/7.1/mods-available/custom_php.ini /etc/php/7.1/cli/conf.d/custom_php.ini
+RUN ln -s /etc/php/7.1/mods-available/custom_php.ini /etc/php/7.1/apache2/conf.d/custom_php.ini
 
 # User 1000 is www-data
 RUN usermod -u 1000 www-data

@@ -53,5 +53,15 @@ Docker
 Run your composer and symfony command command in the web container
 
 
-    docker exec -it blog4fun_web_1 php composer.phar install --prefer-dist -a
-    docker exec -it blog4fun_web_1 php bin/console cache:clear
+    docker exec -it -u 1000 blog4fun_web_1 php composer.phar install --prefer-dist -a
+    docker exec -it -u 1000 blog4fun_web_1 php bin/console cache:clear
+
+
+
+Docker
+--------------
+
+You have to create a mongo user :
+
+    docker exec -it blog4fun_db_1 mongo admin
+    db.createUser({ user: 'blog4fun', pwd: 'blog4fun_pwd', roles: [ { role: "readWrite", db: "blog4fun" } ] });
